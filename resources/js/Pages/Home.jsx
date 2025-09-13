@@ -1,7 +1,19 @@
+import Navbar from "../components/Navbar";
+import Hero from "../components/layouts/Home/Hero";
+import Section_2 from "../components/layouts/Home/Section_2";
+import Rekomendasi from "../components/layouts/Home/Rekomendasi";
+import DepartemenUnggulan from "../components/layouts/Home/Departemen";
+import Footer from "../components/Footer";
+
 export default function Home() {
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <h1 className="text-4xl font-bold text-blue-600">Test</h1>
+        <div>
+            <Navbar />
+            <Hero />
+            <Section_2 />
+            <Rekomendasi />
+            <DepartemenUnggulan />
+            <Footer />
         </div>
     )
 }
