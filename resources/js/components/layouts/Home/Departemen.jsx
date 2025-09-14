@@ -72,11 +72,11 @@ export default function Departemen() {
     const handleTouchEnd = () => setIsDragging(false);
 
     return (
-        <section className="w-full py-16 bg-gray-50 flex justify-start">
+        <section className="w-full py-8 bg-gray-50 flex justify-start">
             <div className="w-full max-w-7xl px-4 md:px-6">
                 {/* Header */}
-                <div className="mb-12">
-                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                <div className="mb-4">
+                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-1">
                         4 Departemen Unggulan
                     </h2>
                     <div className="text-4xl md:text-5xl font-bebas text-orange-500">
@@ -85,7 +85,7 @@ export default function Departemen() {
                 </div>
 
                 {/* Card Stack */}
-                <div className="relative h-[500px] md:h-[700px] flex justify-start items-center">
+                <div className="relative h-[420px] md:h-[500px] flex justify-start items-center">
                     {departments.map((dept, index) => {
                         const position = (index - currentIndex + departments.length) % departments.length;
                         const isActive = position === 0;
@@ -102,7 +102,7 @@ export default function Departemen() {
                         return (
                             <div
                                 key={dept.id}
-                                className={`absolute w-[90%] md:w-[70%] max-w-4xl h-[400px] md:h-[350px] bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 ease-in-out ${isActive ? "cursor-grab active:cursor-grabbing" : "pointer-events-none"}`}
+                                className={`absolute w-[90%] md:w-[70%] max-w-4xl h-[380px] md:h-[350px] bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 ease-in-out ${isActive ? "cursor-grab active:cursor-grabbing" : "pointer-events-none"}`}
                                 style={{ transform: `translateX(${translateX}px) translateY(${translateY}px) scale(${scale}) rotate(${rotate}deg)`, opacity, zIndex }}
                                 onTouchStart={isActive ? handleTouchStart : undefined}
                                 onTouchMove={isActive ? handleTouchMove : undefined}
@@ -117,7 +117,7 @@ export default function Departemen() {
                                     {/* Content */}
                                     <div className="w-full md:w-3/5 p-4 md:p-6 flex flex-col justify-between">
                                         <div>
-                                            <div className="flex items-center justify-between mb-4">
+                                            <div className="flex items-center justify-between mb-2">
                                                 <h3 className="text-xl md:text-2xl font-bold text-gray-900">{dept.shortName}</h3>
                                                 <span className={`px-3 py-1 rounded-full text-xs font-semibold ${colorMap[dept.color]}`}>
                                                     {dept.name}
@@ -136,7 +136,7 @@ export default function Departemen() {
                 </div>
 
                 {/* Controls */}
-                <div className="flex justify-start mt-6 space-x-4 flex-wrap md:flex-nowrap">
+                <div className="flex justify-start mt-2 space-x-4 flex-wrap md:flex-nowrap">
                     <button onClick={handlePrev} className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-full transition-colors">
                         ← Prev
                     </button>
@@ -150,7 +150,7 @@ export default function Departemen() {
                     </button>
                 </div>
 
-                <div className="text-left mt-6 text-gray-500">
+                <div className="text-left mt-2 text-gray-500">
                     Geser kartu untuk melihat departemen lainnya
                 </div>
             </div>

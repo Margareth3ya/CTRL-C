@@ -1,4 +1,7 @@
+
 import { useState } from "react";
+import { Link } from "@inertiajs/react";
+
 
 export default function Navbar() {
     const [openDropdown, setOpenDropdown] = useState(null);
@@ -70,9 +73,10 @@ export default function Navbar() {
                         <div
                             className={`absolute bg-white shadow-lg rounded mt-2 py-2 w-48 transform transition-all duration-200 origin-top
                             ${openDropdown === "informasi" ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"}`} >
-                            <a href="/" className="block px-4 py-2 rounded hover:bg-orange-100">
+                            <Link href="/berita" className="block px-4 py-2 rounded hover:bg-orange-100">
                                 Berita
-                            </a>
+                            </Link>
+
                             <a href="/" className="block px-4 py-2 rounded hover:bg-orange-100">
                                 Kegiatan
                             </a>

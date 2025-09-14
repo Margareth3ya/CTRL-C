@@ -58,10 +58,10 @@ export default function Rekomendasi() {
                     {!showResult ? (
                         <div className="transition-opacity duration-500 ease-in-out">
                             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                                REKOMENDASI JURUSAN
+                                TEMUKAN JURUSAN
                             </h2>
                             <div className="text-3xl md:text-4xl font-bebas text-orange-400 mb-6">
-                                agar tidak salah memilih jurusan
+                                TEPAT UNTUKMU
                             </div>
                             <p className="text-lg text-gray-700 mb-8">
                                 Belum tahu jurusan apa yang cocok?<br />
