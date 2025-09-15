@@ -1,12 +1,25 @@
 import React, { useState } from "react";
 
 export default function Rekomendasi() {
-    const [skills, setSkills] = useState("");
-    const [experience, setExperience] = useState("");
-    const [keywords, setKeywords] = useState("");
+    const [keyword, setKeyword] = useState("");
     const [result, setResult] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [showResult, setShowResult] = useState(false);
+    const [showDropdown, setShowDropdown] = useState(false);
+
+    const popularKeywords = [
+        "Programming",
+        "Desain Grafis",
+        "Mesin",
+        "Multimedia",
+        "Jaringan",
+        "Animasi",
+    ];
+
+    const handleSelectKeyword = (kw) => {
+        setKeyword(kw);
+        setShowDropdown(false);
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -39,13 +52,9 @@ export default function Rekomendasi() {
         }, 1500);
     };
 
-    const handleExploreDepartment = () => {
-        window.location.href = "/jurusan";
-    };
-
     const handleReset = () => {
         setShowResult(false);
-        setKeywords("");
+        setKeyword("");
         setTimeout(() => {
             setResult(null);
         }, 500);
@@ -54,9 +63,10 @@ export default function Rekomendasi() {
     return (
         <section className="w-full py-16 bg-white flex justify-center">
             <div className="w-full max-w-6xl px-4 flex flex-col lg:flex-row gap-12">
-                <div className="w-full lg:w-1/2 flex flex-col justify-center transition-all duration-700 ease-in-out">
+                {/* Kiri */}
+                <div className="w-full lg:w-1/2 flex flex-col justify-center">
                     {!showResult ? (
-                        <div className="transition-opacity duration-500 ease-in-out">
+                        <div>
                             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                                 TEMUKAN JURUSAN
                             </h2>
@@ -71,12 +81,11 @@ export default function Rekomendasi() {
                             </p>
                         </div>
                     ) : (
-                        <div className="bg-gradient-to-br from-blue-50 to-orange-50 p-8 rounded-2xl shadow-lg transition-all duration-700 transform">
+                        <div className="bg-gradient-to-br from-blue-50 to-orange-50 p-8 rounded-2xl shadow-lg">
                             <h2 className="text-3xl font-bold text-gray-900 mb-2">
                                 REKOMENDASI KAMI
                             </h2>
                             <div className="w-20 h-1 bg-orange-500 mb-6"></div>
-
                             {result && (
                                 <div className="space-y-6">
                                     <div>
@@ -85,7 +94,6 @@ export default function Rekomendasi() {
                                             {result.department}
                                         </span>
                                     </div>
-
                                     <div className="relative overflow-hidden rounded-xl">
                                         <img
                                             src={result.image}
@@ -94,66 +102,83 @@ export default function Rekomendasi() {
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                                     </div>
-
                                     <p className="text-gray-700 text-lg leading-relaxed">
                                         {result.description}
                                     </p>
-
-                                    <button
-                                        onClick={handleExploreDepartment}
-                                        className="px-6 py-2 bg-white border border-orange-500 text-orange-500 rounded-lg hover:bg-orange-50 transition-colors duration-300"
-                                    >
-                                        Pelajari Selengkapnya
-                                    </button>
                                 </div>
                             )}
                         </div>
                     )}
                 </div>
 
-                {/* Form dan Hasil */}
+                {/* Form Kanan */}
                 <div className="w-full lg:w-1/2 flex flex-col items-center">
                     {!showResult && (
                         <form
                             onSubmit={handleSubmit}
-                            className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 mb-8 transition-all duration-500 transform hover:shadow-2xl"
+                            className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 mb-8"
                         >
                             <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
                                 Ceritakan Minatmu
                             </h3>
 
-                            <div className="mb-6">
-                                <label className="block text-gray-700 mb-2">Jurusan yang diminati</label>
+                            <div className="mb-6 relative">
+                                <label className="block text-gray-700 mb-2">Keyword</label>
                                 <input
                                     type="text"
-                                    value={skills}
-                                    onChange={(e) => setSkills(e.target.value)}
-                                    placeholder="Contoh: desain, programming, menulis"
-                                    className="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                                />
-                            </div>
-
-                            <div className="mb-6">
-                                <textarea
-                                    value={keywords}
-                                    onChange={(e) => setKeywords(e.target.value)}
-                                    placeholder="Masukkan kata kunci yang mencerminkan minatmu"
-                                    rows="2"
+                                    value={keyword}
+                                    onChange={(e) => setKeyword(e.target.value)}
+                                    onFocus={() => setShowDropdown(true)}
+                                    placeholder="Keyword yang sering didengar..."
                                     className="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                                     required
                                 />
+                                {showDropdown && (
+                                    <ul className="absolute z-10 w-full bg-white border border-gray-200 mt-1 rounded-lg shadow-md">
+                                        {popularKeywords
+                                            .filter((kw) =>
+                                                kw.toLowerCase().includes(keyword.toLowerCase())
+                                            )
+                                            .map((kw, idx) => (
+                                                <li
+                                                    key={idx}
+                                                    className="px-4 py-2 hover:bg-orange-100 cursor-pointer"
+                                                    onClick={() => handleSelectKeyword(kw)}
+                                                >
+                                                    {kw}
+                                                </li>
+                                            ))}
+                                    </ul>
+                                )}
                             </div>
 
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-4 rounded-lg font-medium text-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center"
+                                className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-4 rounded-lg font-medium text-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-300 flex items-center justify-center"
                             >
                                 {isLoading ? (
                                     <>
-                                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        <svg
+                                            className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <circle
+                                                className="opacity-25"
+                                                cx="12"
+                                                cy="12"
+                                                r="10"
+                                                stroke="currentColor"
+                                                strokeWidth="4"
+                                            ></circle>
+                                            <path
+                                                className="opacity-75"
+                                                fill="currentColor"
+                                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 
+                                                1.135 5.824 3 7.938l3-2.647z"
+                                            ></path>
                                         </svg>
                                         Memproses...
                                     </>
@@ -182,16 +207,6 @@ export default function Rekomendasi() {
                     )}
                 </div>
             </div>
-
-            <style jsx>{`
-                @keyframes fadeIn {
-                    from { opacity: 0; transform: translateY(20px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-                .animate-fade-in {
-                    animation: fadeIn 0.8s ease-out forwards;
-                }
-            `}</style>
         </section>
     );
-};
+}
