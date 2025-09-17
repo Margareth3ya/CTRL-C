@@ -210,3 +210,8 @@ export default function Rekomendasi() {
         </section>
     );
 };
+
+
+// git add .gitignore
+// git commit -m "chore: remove node_modules from repo and ignore it"
+// git push origin main
